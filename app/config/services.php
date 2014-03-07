@@ -56,13 +56,32 @@ $di->set('view', function () use ($config) {
  * Database connection is created based in the parameters defined in the configuration file
  */
 $di->set('db', function () use ($config) {
-    return new DbAdapter(array(
+    $eventsManager = new EventsManager();
+
+    //Listen all the database events
+    $eventsManager->attach('db', function($event, $connection) {
+        if ($event->getType() == 'beforeQuery') {
+
+            $bag = new \Phalcon\Session\Bag('sqllog');
+            $log = $bag->log;
+            $log[] = $connection->getSQLStatement();
+            $bag->log = $log;
+
+        }
+    });
+
+    $connection = new DbAdapter(array(
         'host' => $config->database->host,
         'username' => $config->database->username,
         'password' => $config->database->password,
         'dbname' => $config->database->dbname
     ));
+
+    $connection->setEventsManager($eventsManager);
+
+    return $connection;
 });
+
 
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
