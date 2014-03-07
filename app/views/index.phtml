@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-                {{ get_title() }}
-                {{ stylesheet_link('bootstrap/css/bootstrap.min.css') }}
-                {{ stylesheet_link('bootstrap/css/bootstrap-theme.min.css') }}
+                <?php echo $this->tag->getTitle() ?>
+                <?php echo $this->tag->stylesheetLink('bootstrap/css/bootstrap.min.css') ?>
+                <?php echo $this->tag->stylesheetLink('bootstrap/css/bootstrap-theme.min.css') ?>
 
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <meta name="description" content="mother">
@@ -21,7 +21,7 @@
 
 
 	</head>
-	<body role="document" style="padding-top: 50px;">
+	<body role="document" style="padding-top: 60px;">
 
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -32,18 +32,34 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="/">Mother</a>
           </div>
           <div class="navbar-collapse collapse">
-          {{ elements.getMenu() }}
+              <?php echo $this->elements->getMenu() ?>
 
           </div><!--/.nav-collapse -->
         </div>
     </div>
 
-		{{ content() }}
-    
-		{{ javascript_include('js/jquery/jquery.min.js') }}
-        {{ javascript_include('bootstrap/js/bootstrap.min.js') }}
+    <?php echo $this->getContent() ?>
+
+
+    <?php if(isset($_SESSION['sqllog'])) { ?>
+        <!--
+        <div class="container">
+            <div class="panel panel-default">
+                <ul class="list-group">
+                    <?php foreach ($_SESSION['sqllog']['log'] as $sql) { ?>
+                        <li class="list-group-item"><?php echo $sql; ?></li>
+                    <?php } ?>
+                </ul>
+
+            </div>
+        </div>-->
+    <?php } unset($_SESSION['sqllog']);?>
+
+
+<?php echo $this->tag->javascriptInclude('js/jquery/jquery.min.js') ?>
+        <?php echo $this->tag->javascriptInclude('bootstrap/js/bootstrap.min.js') ?>
 	</body>
 </html>
