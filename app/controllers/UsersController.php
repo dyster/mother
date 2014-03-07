@@ -84,7 +84,7 @@ class UsersController extends ControllerBase
             $this->tag->setDefault("id", $user->getId());
             $this->tag->setDefault("username", $user->getUsername());
             $this->tag->setDefault("password", $user->getPassword());
-            
+
         }
     }
 
@@ -105,7 +105,6 @@ class UsersController extends ControllerBase
 
         $user->setUsername($this->request->getPost("username"));
         $user->setPassword($this->request->getPost("password"));
-        
 
         if (!$user->save()) {
             foreach ($user->getMessages() as $message) {
@@ -155,7 +154,6 @@ class UsersController extends ControllerBase
 
         $user->setUsername($this->request->getPost("username"));
         $user->setPassword($this->request->getPost("password"));
-        
 
         if (!$user->save()) {
 

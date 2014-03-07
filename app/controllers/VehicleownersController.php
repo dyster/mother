@@ -85,7 +85,7 @@ class VehicleownersController extends ControllerBase
 
             $this->tag->setDefault("id", $vehicleowner->getId());
             $this->tag->setDefault("name", $vehicleowner->getName());
-            
+
         }
     }
 
@@ -105,7 +105,6 @@ class VehicleownersController extends ControllerBase
         $vehicleowner = new Vehicleowners();
 
         $vehicleowner->setName($this->request->getPost("name"));
-        
 
         if (!$vehicleowner->save()) {
             foreach ($vehicleowner->getMessages() as $message) {
@@ -154,7 +153,6 @@ class VehicleownersController extends ControllerBase
         }
 
         $vehicleowner->setName($this->request->getPost("name"));
-        
 
         if (!$vehicleowner->save()) {
 

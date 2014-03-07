@@ -44,7 +44,6 @@ class Security extends Plugin
             //return $this->dispatcher->forward(compact('controller', 'action'));
         }
 
-
     }
 
 }

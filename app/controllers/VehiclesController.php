@@ -89,7 +89,7 @@ class VehiclesController extends ControllerBase
             $this->tag->setDefault("created", $vehicle->getCreated());
             $this->tag->setDefault("touch", $vehicle->getTouch());
             $this->tag->setDefault("vehicleowner_id", $vehicle->getVehicleownerId());
-            
+
         }
     }
 
@@ -111,7 +111,6 @@ class VehiclesController extends ControllerBase
         $vehicle->setName($this->request->getPost("name"));
         $vehicle->setVehicletypeId($this->request->getPost("vehicletype_id"));
         $vehicle->setVehicleownerId($this->request->getPost("vehicleowner_id"));
-        
 
         if (!$vehicle->save()) {
             foreach ($vehicle->getMessages() as $message) {
@@ -162,7 +161,6 @@ class VehiclesController extends ControllerBase
         $vehicle->setName($this->request->getPost("name"));
         $vehicle->setVehicletypeId($this->request->getPost("vehicletype_id"));
         $vehicle->setVehicleownerId($this->request->getPost("vehicleowner_id"));
-        
 
         if (!$vehicle->save()) {
 

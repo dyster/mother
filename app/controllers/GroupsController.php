@@ -86,7 +86,7 @@ class GroupsController extends ControllerBase
             $this->tag->setDefault("id", $group->getId());
             $this->tag->setDefault("name", $group->getName());
             $this->tag->setDefault("note", $group->getNote());
-            
+
         }
     }
 
@@ -107,7 +107,6 @@ class GroupsController extends ControllerBase
 
         $group->setName($this->request->getPost("name"));
         $group->setNote($this->request->getPost("note"));
-        
 
         if (!$group->save()) {
             foreach ($group->getMessages() as $message) {
@@ -157,7 +156,6 @@ class GroupsController extends ControllerBase
 
         $group->setName($this->request->getPost("name"));
         $group->setNote($this->request->getPost("note"));
-        
 
         if (!$group->save()) {
 

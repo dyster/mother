@@ -87,7 +87,7 @@ class AcosController extends ControllerBase
             $this->tag->setDefault("controller", $aco->getController());
             $this->tag->setDefault("action", $aco->getAction());
             $this->tag->setDefault("hide", $aco->getHide());
-            
+
         }
     }
 
@@ -109,7 +109,6 @@ class AcosController extends ControllerBase
         $aco->setController($this->request->getPost("controller"));
         $aco->setAction($this->request->getPost("action"));
         $aco->setHide($this->request->getPost("hide"));
-        
 
         if (!$aco->save()) {
             foreach ($aco->getMessages() as $message) {
@@ -160,7 +159,6 @@ class AcosController extends ControllerBase
         $aco->setController($this->request->getPost("controller"));
         $aco->setAction($this->request->getPost("action"));
         $aco->setHide($this->request->getPost("hide"));
-        
 
         if (!$aco->save()) {
 

@@ -78,8 +78,6 @@ class Elements extends Phalcon\Mvc\User\Component
 
         $controllerName = $this->view->getControllerName();
 
-
-
         echo '<ul class="nav navbar-nav">';
         foreach ($pages as $controller => $actions) {
             if ($controllerName == $controller) {

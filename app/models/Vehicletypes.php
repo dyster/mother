@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 class Vehicletypes extends \Phalcon\Mvc\Model
 {
 
@@ -11,17 +8,17 @@ class Vehicletypes extends \Phalcon\Mvc\Model
      * @var integer
      */
     protected $id;
-     
+
     /**
      *
      * @var string
      */
     protected $name;
-     
+
     /**
      * Method to set the value of field id
      *
-     * @param integer $id
+     * @param  integer $id
      * @return $this
      */
     public function setId($id)
@@ -34,7 +31,7 @@ class Vehicletypes extends \Phalcon\Mvc\Model
     /**
      * Method to set the value of field name
      *
-     * @param string $name
+     * @param  string $name
      * @return $this
      */
     public function setName($name)
@@ -69,7 +66,7 @@ class Vehicletypes extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-		$this->hasMany("id", "Vehicles", "vehicletype_id", NULL);
+        $this->hasMany("id", "Vehicles", "vehicletype_id", NULL);
 
     }
 

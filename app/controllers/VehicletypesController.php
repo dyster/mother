@@ -85,7 +85,7 @@ class VehicletypesController extends ControllerBase
 
             $this->tag->setDefault("id", $vehicletype->getId());
             $this->tag->setDefault("name", $vehicletype->getName());
-            
+
         }
     }
 
@@ -105,7 +105,6 @@ class VehicletypesController extends ControllerBase
         $vehicletype = new Vehicletypes();
 
         $vehicletype->setName($this->request->getPost("name"));
-        
 
         if (!$vehicletype->save()) {
             foreach ($vehicletype->getMessages() as $message) {
@@ -154,7 +153,6 @@ class VehicletypesController extends ControllerBase
         }
 
         $vehicletype->setName($this->request->getPost("name"));
-        
 
         if (!$vehicletype->save()) {
 
