@@ -73,7 +73,7 @@ class UsersController extends ControllerBase
 
             $user = Users::findFirstByid($id);
             if (!$user) {
-                $this->flash->error("user was not found");
+                $this->flash->error("user $id was not found");
 
                 return $this->dispatcher->forward(array(
                     "controller" => "users",
@@ -84,6 +84,38 @@ class UsersController extends ControllerBase
             $this->tag->setDefault("id", $user->getId());
             $this->tag->setDefault("username", $user->getUsername());
             $this->tag->setDefault("password", $user->getPassword());
+
+            $directacos = array();
+            foreach($user->Acos as $useraco) {
+                $directacos[] = $useraco->getId();
+            }
+
+            $groups = $user->Groups;
+
+            $groupacos = array();
+            foreach($groups as $group) {
+                foreach($group->Acos as $groupaco) {
+                    $groupacos[] = $groupaco->getId();
+                }
+            }
+            $groupacos = array_unique($groupacos);
+
+
+
+            $acos = Acos::find();
+
+            foreach($acos as $aco) {
+
+                $array[] = array(
+                    'controller' => $aco->getController(),
+                    'action' => $aco->getAction(),
+                    'groupok' => in_array($aco->getId(), $groupacos),
+                    'directok' => in_array($aco->getId(), $directacos)
+                );
+            }
+
+            $this->view->table = $array;
+            $this->view->groups = $groups;
 
         }
     }

@@ -92,7 +92,13 @@ class Groups extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->hasMany("id", "UsersGroups", "group_id", NULL);
-
+        $this->hasManyToMany(
+            "id",
+            "GroupsAcos",
+            "group_id", "aco_id",
+            "Acos",
+            "id"
+        );
     }
 
     /**

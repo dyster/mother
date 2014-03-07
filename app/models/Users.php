@@ -82,6 +82,20 @@ class Users extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->hasMany("id", "UsersGroups", "user_id", NULL);
+        $this->hasManyToMany(
+            "id",
+            "UsersAcos",
+            "user_id", "aco_id",
+            "Acos",
+            "id"
+        );
+        $this->hasManyToMany(
+            "id",
+            "UsersGroups",
+            "user_id", "group_id",
+            "Groups",
+            "id"
+        );
 
     }
 

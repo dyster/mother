@@ -19,30 +19,41 @@ class Security extends Plugin
     public function beforeDispatch(Event $event, Dispatcher $dispatcher)
     {
 
+
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
-        $aco = Acos::findFirst("controller = '$controller' AND action = '$action'");
-        if (empty($aco)) {
+        $wantedaco = Acos::findFirst("controller = '$controller' AND action = '$action'");
+        if (empty($wantedaco)) {
 
-            /*
-             *  No aco exist, lets make one to save some database prodding
-             */
-            $Aco = new Acos();
-            $Aco->setController($controller);
-            $Aco->setAction($action);
-            $Aco->setHide(0);
-            if (!$Aco->save()) {
-                foreach ($Aco->getMessages() as $message) {
-                    $this->flash->error($message);
-                }
-            } else {
-                $this->flash->notice("An aco for $controller/$action was created successfully");
-            }
+            $this->flash->error("There is no ACO for $controller/$action");
+            return;
+            // We should enable this in production
+            //return $this->dispatcher->forward(array('controller' => 'index', 'action' => 'index'));
 
-            // Hopefully there will be one now
-            $aco = Acos::findFirst("controller = '$controller' AND action = '$action'");
-            //return $this->dispatcher->forward(compact('controller', 'action'));
         }
+        $wantedID = $wantedaco->getId();
+        $pass = false;
+
+        $user = Users::findFirst();
+        foreach($user->Acos as $aco) {
+            if($aco->getId() == $wantedID) {
+                $this->flash->success("Access Granted");
+                return;
+            }
+        }
+
+        $groups = $user->Groups;
+
+        foreach($groups as $group) {
+            foreach($group->Acos as $aco) {
+                if($aco->getId() == $wantedID) {
+                    $this->flash->success("Access Granted");
+                    return;
+                }
+            }
+        }
+
+        $this->flash->error("Access Denied");
 
     }
 

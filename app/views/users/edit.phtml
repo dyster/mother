@@ -5,22 +5,55 @@
     <li><?php echo $this->tag->linkTo(array("users", "Back")) ?></li>
 </ol>
 
-<?php echo $this->tag->form("users/save") ?>
+<div class="panel panel-default">
+    <div class="panel-heading">Edit User</div>
+    <div class="panel-body">
+        <?php echo $this->tag->form("users/save") ?>
 
-    <h1>Edit users</h1>
-    <div class="form-group">
-        <label for="username">Username</label>
-        <?php echo $this->tag->textField(array("username", "size" => 30, "class" => "form-control")) ?>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <?php echo $this->tag->textField(array("password", "size" => 30, "class" => "form-control")) ?>
-    </div>
 
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button type="submit" class="btn btn-default">Save</button>
-        </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <?php echo $this->tag->textField(array("username", "size" => 30, "class" => "form-control")) ?>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <?php echo $this->tag->textField(array("password", "size" => 30, "class" => "form-control")) ?>
+            </div>
+
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-default">Save</button>
+                </div>
+            </div>
+            <?php echo $this->tag->hiddenField("id") ?>
+        </form>
     </div>
-    <?php echo $this->tag->hiddenField("id") ?>
-</form>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Group Memberships</div>
+    <ul class="list-group">
+        <?php foreach($groups as $group) { ?>
+            <li class="list-group-item"><?php echo $group->getName(); ?></li>
+        <?php } ?>
+    </ul>
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Page Permissions</div>
+    <table class="table">
+        <thead>
+            <th>Controller</th><th>Action</th><th>Group</th><th>Direct</th>
+        </thead>
+        <?php foreach($table as $row) { ?>
+        <tr>
+            <td><?php echo $row['controller']; ?></td>
+            <td><?php echo $row['action']; ?></td>
+            <td><span class="glyphicon glyphicon-<?php echo $row['groupok'] ? 'ok':'remove'; ?>" style="color: <?php echo $row['groupok'] ? 'green':'red'; ?>;"></span></td>
+            <td><span class="glyphicon glyphicon-<?php echo $row['directok'] ? 'ok':'remove'; ?>" style="color: <?php echo $row['directok'] ? 'green':'red'; ?>"></span></td>
+        </tr>
+        <?php } ?>
+    </table>
+</div>
+
