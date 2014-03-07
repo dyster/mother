@@ -1,0 +1,30 @@
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("acos", "Back")) ?></li>
+</ol>
+
+<?php echo $this->tag->form("acos/save") ?>
+
+    <h1>Edit acos</h1>
+    <div class="form-group">
+        <label for="controller">Controller</label>
+        <?php echo $this->tag->textField(array("controller", "size" => 30, "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="action">Action</label>
+        <?php echo $this->tag->textField(array("action", "size" => 30, "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="hide">Hide</label>
+        <?php echo $this->tag->textField(array("hide", "size" => 30, "class" => "form-control")) ?>
+    </div>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="submit" class="btn btn-default">Save</button>
+        </div>
+    </div>
+    <?php echo $this->tag->hiddenField("id") ?>
+</form>

@@ -1,0 +1,40 @@
+<?php use Phalcon\Tag; ?>
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("users", "Back")) ?></li>
+    <li><?php echo $this->tag->linkTo(array("users/new", "Create ")); ?></li>
+</ol>
+
+<h1>users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Password</th>
+         </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($page->items as $user) { ?>
+        <tr>
+            <td><?php echo $user->getId() ?></td>
+            <td><?php echo $user->getUsername() ?></td>
+            <td><?php echo $user->getPassword() ?></td>
+            <td><?php echo $this->tag->linkTo(array("users/edit/" . $user->getId(), "Edit")); ?></td>
+            <td><?php echo $this->tag->linkTo(array("users/delete/" . $user->getId(), "Delete")); ?></td>
+        </tr>
+    <?php } ?>
+    </tbody>
+</table>
+
+<ul class="pager">
+    <li><?php echo $this->tag->linkTo("users/search", "First") ?></li>
+    <li><?php echo $this->tag->linkTo("users/search?page=" . $page->before, "Previous") ?></li>
+    <li><?php echo $this->tag->linkTo("users/search?page=" . $page->next, "Next") ?></li>
+    <li><?php echo $this->tag->linkTo("users/search?page=" . $page->last, "Last") ?></li>
+    <li><?php echo $page->current, "/", $page->total_pages ?></li>
+</ul>
+

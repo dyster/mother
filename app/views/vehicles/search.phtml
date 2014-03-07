@@ -1,0 +1,46 @@
+<?php use Phalcon\Tag; ?>
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("vehicles", "Back")) ?></li>
+    <li><?php echo $this->tag->linkTo(array("vehicles/new", "Create ")); ?></li>
+</ol>
+
+<h1>vehicles</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Vehicletype</th>
+            <th>Created</th>
+            <th>Touch</th>
+            <th>Vehicleowner</th>
+         </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($page->items as $vehicle) { ?>
+        <tr>
+            <td><?php echo $vehicle->getId() ?></td>
+            <td><?php echo $vehicle->getName() ?></td>
+            <td><?php echo $vehicle->getVehicletypeId() ?></td>
+            <td><?php echo $vehicle->getCreated() ?></td>
+            <td><?php echo $vehicle->getTouch() ?></td>
+            <td><?php echo $vehicle->getVehicleownerId() ?></td>
+            <td><?php echo $this->tag->linkTo(array("vehicles/edit/" . $vehicle->getId(), "Edit")); ?></td>
+            <td><?php echo $this->tag->linkTo(array("vehicles/delete/" . $vehicle->getId(), "Delete")); ?></td>
+        </tr>
+    <?php } ?>
+    </tbody>
+</table>
+
+<ul class="pager">
+    <li><?php echo $this->tag->linkTo("vehicles/search", "First") ?></li>
+    <li><?php echo $this->tag->linkTo("vehicles/search?page=" . $page->before, "Previous") ?></li>
+    <li><?php echo $this->tag->linkTo("vehicles/search?page=" . $page->next, "Next") ?></li>
+    <li><?php echo $this->tag->linkTo("vehicles/search?page=" . $page->last, "Last") ?></li>
+    <li><?php echo $page->current, "/", $page->total_pages ?></li>
+</ul>
+

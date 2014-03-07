@@ -1,0 +1,29 @@
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("vehicles", "Back")) ?></li>
+</ol>
+
+<?php echo $this->tag->form("vehicles/create") ?>
+
+    <h1>Create vehicles</h1>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="vehicletype_id">Vehicletype</label>
+        <?php echo $this->tag->select(array("vehicletype_id", Vehicletypes::find(), "using" => array("id", "name"), "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="vehicleowner_id">Vehicleowner</label>
+        <?php echo $this->tag->select(array("vehicleowner_id", Vehicleowners::find(), "using" => array("id", "name"), "class" => "form-control")) ?>
+    </div>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="submit" class="btn btn-default">Search</button>
+        </div>
+    </div>
+</form>

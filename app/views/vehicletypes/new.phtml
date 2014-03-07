@@ -1,0 +1,21 @@
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("vehicletypes", "Back")) ?></li>
+</ol>
+
+<?php echo $this->tag->form("vehicletypes/create") ?>
+
+    <h1>Create vehicletypes</h1>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control")) ?>
+    </div>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="submit" class="btn btn-default">Search</button>
+        </div>
+    </div>
+</form>

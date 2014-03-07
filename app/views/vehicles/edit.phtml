@@ -1,0 +1,38 @@
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("vehicles", "Back")) ?></li>
+</ol>
+
+<?php echo $this->tag->form("vehicles/save") ?>
+
+    <h1>Edit vehicles</h1>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="vehicletype_id">Vehicletype</label>
+        <?php echo $this->tag->textField(array("vehicletype_id", "type" => "number", "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="created">Created</label>
+        <?php echo $this->tag->textField(array("created", "size" => 30, "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="touch">Touch</label>
+        <?php echo $this->tag->textField(array("touch", "size" => 30, "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="vehicleowner_id">Vehicleowner</label>
+        <?php echo $this->tag->textField(array("vehicleowner_id", "type" => "number", "class" => "form-control")) ?>
+    </div>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="submit" class="btn btn-default">Save</button>
+        </div>
+    </div>
+    <?php echo $this->tag->hiddenField("id") ?>
+</form>

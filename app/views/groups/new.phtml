@@ -1,0 +1,25 @@
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("groups", "Back")) ?></li>
+</ol>
+
+<?php echo $this->tag->form("groups/create") ?>
+
+    <h1>Create groups</h1>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="note">Note</label>
+        <?php echo $this->tag->textField(array("note", "size" => 30, "class" => "form-control")) ?>
+    </div>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="submit" class="btn btn-default">Search</button>
+        </div>
+    </div>
+</form>

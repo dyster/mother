@@ -1,0 +1,25 @@
+
+<?php echo $this->getContent() ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("vehicletypes/new", "Create vehicletypes")) ?></li>
+</ol>
+
+<?php echo $this->tag->form(array("vehicletypes/search", "autocomplete" => "off")) ?>
+
+    <h1>Search vehicletypes</h1>
+    <div class="form-group">
+        <label for="id">Id</label>
+        <?php echo $this->tag->textField(array("id", "type" => "number", "class" => "form-control")) ?>
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control")) ?>
+    </div>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="submit" class="btn btn-default">Search</button>
+        </div>
+    </div>
+</form>

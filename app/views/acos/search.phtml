@@ -1,0 +1,42 @@
+<?php use Phalcon\Tag; ?>
+
+<?php echo $this->getContent(); ?>
+
+<ol class="breadcrumb">
+    <li><?php echo $this->tag->linkTo(array("acos", "Back")) ?></li>
+    <li><?php echo $this->tag->linkTo(array("acos/new", "Create ")); ?></li>
+</ol>
+
+<h1>acos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Controller</th>
+            <th>Action</th>
+            <th>Hide</th>
+         </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($page->items as $aco) { ?>
+        <tr>
+            <td><?php echo $aco->getId() ?></td>
+            <td><?php echo $aco->getController() ?></td>
+            <td><?php echo $aco->getAction() ?></td>
+            <td><?php echo $aco->getHide() ?></td>
+            <td><?php echo $this->tag->linkTo(array("acos/edit/" . $aco->getId(), "Edit")); ?></td>
+            <td><?php echo $this->tag->linkTo(array("acos/delete/" . $aco->getId(), "Delete")); ?></td>
+        </tr>
+    <?php } ?>
+    </tbody>
+</table>
+
+<ul class="pager">
+    <li><?php echo $this->tag->linkTo("acos/search", "First") ?></li>
+    <li><?php echo $this->tag->linkTo("acos/search?page=" . $page->before, "Previous") ?></li>
+    <li><?php echo $this->tag->linkTo("acos/search?page=" . $page->next, "Next") ?></li>
+    <li><?php echo $this->tag->linkTo("acos/search?page=" . $page->last, "Last") ?></li>
+    <li><?php echo $page->current, "/", $page->total_pages ?></li>
+</ul>
+
