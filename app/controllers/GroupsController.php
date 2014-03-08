@@ -61,6 +61,62 @@ class GroupsController extends ControllerBase
 
     }
 
+    public function flipAction($groupid, $acoid)
+    {
+
+        $group = Groups::findFirstByid($groupid);
+        $aco = Acos::findFirstByid($acoid);
+
+        if(empty($group)) {
+            $this->flash->error("Group $groupid doesn't exist");
+            return $this->dispatcher->forward(array(
+                "controller" => "groups",
+                "action" => "edit",
+                "params" => array($groupid)
+            ));
+        }
+        if(empty($aco)) {
+            $this->flash->error("Aco $acoid doesn't exist");
+            return $this->dispatcher->forward(array(
+                "controller" => "groups",
+                "action" => "edit",
+                "params" => array($groupid)
+            ));
+        }
+
+        $groupaco = GroupsAcos::findFirst("group_id = $groupid AND aco_id = $acoid");
+        if(empty($groupaco)) {
+            // Permission denied, lets flip
+            $groupaco = new GroupsAcos();
+            $groupaco->group_id = $groupid;
+            $groupaco->aco_id = $acoid;
+
+            if (!$groupaco->save()) {
+                foreach ($groupaco->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+            } else {
+                $this->flash->success("Group " . $group->getName() . " is now allowing " . $aco->getController() . "::" . $aco->getAction());
+            }
+
+        } else {
+            // Permission allowed, lets flip
+            if (!$groupaco->delete()) {
+                foreach ($groupaco->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+            } else {
+                $this->flash->success("Group " . $group->getName() . " is no longer allowing " . $aco->getController() . "::" . $aco->getAction());
+            }
+        }
+
+        return $this->dispatcher->forward(array(
+            "controller" => "groups",
+            "action" => "edit",
+            "params" => array($groupid)
+        ));
+    }
+
     /**
      * Edits a group
      *
@@ -73,7 +129,7 @@ class GroupsController extends ControllerBase
 
             $group = Groups::findFirstByid($id);
             if (!$group) {
-                $this->flash->error("group was not found");
+                $this->flash->error("group $id was not found");
 
                 return $this->dispatcher->forward(array(
                     "controller" => "groups",
@@ -81,12 +137,31 @@ class GroupsController extends ControllerBase
                 ));
             }
 
-            $this->view->id = $group->id;
+            $this->view->id = $group->getId();
 
             $this->tag->setDefault("id", $group->getId());
             $this->tag->setDefault("name", $group->getName());
             $this->tag->setDefault("note", $group->getNote());
 
+            $groupacos = array();
+            foreach($group->Acos as $groupaco) {
+                $groupacos[] = $groupaco->getId();
+            }
+
+            $acos = Acos::find();
+            $array = array();
+            foreach($acos as $aco) {
+
+                $array[] = array(
+                    'controller' => $aco->getController(),
+                    'action' => $aco->getAction(),
+                    'groupok' => in_array($aco->getId(), $groupacos),
+                    'id' => $aco->getId()
+                );
+            }
+
+            $this->view->table = $array;
+            $this->view->group = $group;
         }
     }
 

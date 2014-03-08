@@ -5,22 +5,42 @@
     <li><?php echo $this->tag->linkTo(array("groups", "Back")) ?></li>
 </ol>
 
-<?php echo $this->tag->form("groups/save") ?>
+<div class="panel panel-default">
+    <div class="panel-heading">Edit Group</div>
+    <div class="panel-body">
+        <?php echo $this->tag->form("groups/save") ?>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control")) ?>
+            </div>
+            <div class="form-group">
+                <label for="note">Note</label>
+                <?php echo $this->tag->textField(array("note", "size" => 30, "class" => "form-control")) ?>
+            </div>
 
-    <h1>Edit groups</h1>
-    <div class="form-group">
-        <label for="name">Name</label>
-        <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control")) ?>
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-default">Save</button>
+                </div>
+            </div>
+            <?php echo $this->tag->hiddenField("id") ?>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="note">Note</label>
-        <?php echo $this->tag->textField(array("note", "size" => 30, "class" => "form-control")) ?>
-    </div>
+</div>
 
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button type="submit" class="btn btn-default">Save</button>
-        </div>
-    </div>
-    <?php echo $this->tag->hiddenField("id") ?>
-</form>
+<div class="panel panel-default">
+    <div class="panel-heading">Page Permissions</div>
+    <table class="table">
+        <thead>
+        <th>Controller</th><th>Action</th><th>Allowed</th><th>Change</th>
+        </thead>
+        <?php foreach($table as $row) { ?>
+            <tr>
+                <td><?php echo $row['controller']; ?></td>
+                <td><?php echo $row['action']; ?></td>
+                <td><span class="glyphicon glyphicon-<?php echo $row['groupok'] ? 'ok':'remove'; ?>" style="color: <?php echo $row['groupok'] ? 'green':'red'; ?>;"></span></td>
+                <td><?php echo $this->tag->linkTo(array("groups/flip/".$group->getId()."/".$row['id'], 'Flip')); ?></td>
+            </tr>
+        <?php } ?>
+    </table>
+</div>
