@@ -22,10 +22,11 @@ class Security extends Plugin
 
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
+        $pretty = \Phalcon\Text::camelize($controller) . "::" . \Phalcon\Text::camelize($action);
         $wantedaco = Acos::findFirst("controller = '$controller' AND action = '$action'");
         if (empty($wantedaco)) {
 
-            $this->flash->error("There is no ACO for $controller/$action");
+            $this->flash->error("There is no ACO for $pretty");
             return;
             // We should enable this in production
             //return $this->dispatcher->forward(array('controller' => 'index', 'action' => 'index'));
@@ -53,7 +54,7 @@ class Security extends Plugin
             }
         }
 
-        $this->flash->error("Access Denied");
+        $this->flash->error("Access Denied for $pretty");
 
     }
 
