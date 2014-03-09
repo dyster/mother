@@ -117,6 +117,61 @@ class UsersController extends ControllerBase
         ));
     }
 
+    public function flipgroupAction($userid, $groupid)
+    {
+        $user = Users::findFirstByid($userid);
+        $group = Groups::findFirstByid($groupid);
+
+        if(empty($user)) {
+            $this->flash->error("User $user doesn't exist");
+            return $this->dispatcher->forward(array(
+                "controller" => "users",
+                "action" => "edit",
+                "params" => array($userid)
+            ));
+        }
+        if(empty($group)) {
+            $this->flash->error("Group $groupid doesn't exist");
+            return $this->dispatcher->forward(array(
+                "controller" => "users",
+                "action" => "edit",
+                "params" => array($userid)
+            ));
+        }
+
+        $usergroup = UsersGroups::findFirst("user_id = $userid AND group_id = $groupid");
+        if(empty($usergroup)) {
+            // Permission denied, lets flip
+            $usergroup = new UsersGroups();
+            $usergroup->user_id = $userid;
+            $usergroup->group_id = $groupid;
+
+            if (!$usergroup->save()) {
+                foreach ($usergroup->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+            } else {
+                $this->flash->success("User " . $user->getUsername() . " is now a member in " . $group->getName());
+            }
+
+        } else {
+            // Permission allowed, lets flip
+            if (!$usergroup->delete()) {
+                foreach ($usergroup->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+            } else {
+                $this->flash->success("User " . $user->getUsername() . " is no longer a member in " . $group->getName());
+            }
+        }
+
+        return $this->dispatcher->forward(array(
+            "controller" => "users",
+            "action" => "edit",
+            "params" => array($userid)
+        ));
+    }
+
     /**
      * Edits a user
      *
@@ -149,14 +204,14 @@ class UsersController extends ControllerBase
             $groups = $user->Groups;
 
             $groupacos = array();
+            $groupids = array();
             foreach($groups as $group) {
+                $groupids[] = $group->getId();
                 foreach($group->Acos as $groupaco) {
                     $groupacos[] = $groupaco->getId();
                 }
             }
             $groupacos = array_unique($groupacos);
-
-
 
             $acos = Acos::find();
 
@@ -171,8 +226,18 @@ class UsersController extends ControllerBase
                 );
             }
 
+            $allgroups = Groups::find();
+            $grouptable = array();
+            foreach($allgroups as $group) {
+                $grouptable[] = array(
+                    'name' => $group->getName(),
+                    'member' => in_array($group->getId(), $groupids),
+                    'id' => $group->getId()
+                );
+            }
+
             $this->view->table = $array;
-            $this->view->groups = $groups;
+            $this->view->groups = $grouptable;
             $this->view->user = $user;
         }
     }

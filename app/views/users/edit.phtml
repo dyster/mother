@@ -32,11 +32,15 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">Group Memberships</div>
-    <ul class="list-group">
+    <table class="table">
         <?php foreach($groups as $group) { ?>
-            <li class="list-group-item"><?php echo $group->getName(); ?></li>
+        <tr>
+            <td><?php echo $group['name']; ?></td>
+            <td><span class="glyphicon glyphicon-<?php echo $group['member'] ? 'ok':'remove'; ?>" style="color: <?php echo $group['member'] ? 'green':'red'; ?>;"></span></td>
+            <td><?php echo $this->tag->linkTo(array("users/flipgroup/".$user->getId()."/".$group['id'], 'Flip')); ?></td>
+        </tr>
         <?php } ?>
-    </ul>
+    </table>
 
 </div>
 
