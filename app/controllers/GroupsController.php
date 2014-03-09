@@ -96,7 +96,7 @@ class GroupsController extends ControllerBase
                     $this->flash->error($message);
                 }
             } else {
-                $this->flash->success("Group " . $group->getName() . " is now allowing " . $aco->getController() . "::" . $aco->getAction());
+                $this->flash->success("Group " . $group->getName() . " is now allowing " . $aco->getName());
             }
 
         } else {
@@ -106,7 +106,7 @@ class GroupsController extends ControllerBase
                     $this->flash->error($message);
                 }
             } else {
-                $this->flash->success("Group " . $group->getName() . " is no longer allowing " . $aco->getController() . "::" . $aco->getAction());
+                $this->flash->success("Group " . $group->getName() . " is no longer allowing " . $aco->getName());
             }
         }
 

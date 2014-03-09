@@ -61,6 +61,62 @@ class UsersController extends ControllerBase
 
     }
 
+    public function flipAction($userid, $acoid)
+    {
+
+        $user = Users::findFirstByid($userid);
+        $aco = Acos::findFirstByid($acoid);
+
+        if(empty($user)) {
+            $this->flash->error("User $user doesn't exist");
+            return $this->dispatcher->forward(array(
+                "controller" => "users",
+                "action" => "edit",
+                "params" => array($userid)
+            ));
+        }
+        if(empty($aco)) {
+            $this->flash->error("Aco $acoid doesn't exist");
+            return $this->dispatcher->forward(array(
+                "controller" => "users",
+                "action" => "edit",
+                "params" => array($userid)
+            ));
+        }
+
+        $useraco = UsersAcos::findFirst("user_id = $userid AND aco_id = $acoid");
+        if(empty($useraco)) {
+            // Permission denied, lets flip
+            $useraco = new UsersAcos();
+            $useraco->user_id = $userid;
+            $useraco->aco_id = $acoid;
+
+            if (!$useraco->save()) {
+                foreach ($useraco->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+            } else {
+                $this->flash->success("User " . $user->getUsername() . " is now allowed in " . $aco->getName());
+            }
+
+        } else {
+            // Permission allowed, lets flip
+            if (!$useraco->delete()) {
+                foreach ($useraco->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+            } else {
+                $this->flash->success("User " . $user->getUsername() . " is not allowed in " . $aco->getName());
+            }
+        }
+
+        return $this->dispatcher->forward(array(
+            "controller" => "users",
+            "action" => "edit",
+            "params" => array($userid)
+        ));
+    }
+
     /**
      * Edits a user
      *
@@ -110,13 +166,14 @@ class UsersController extends ControllerBase
                     'controller' => $aco->getController(),
                     'action' => $aco->getAction(),
                     'groupok' => in_array($aco->getId(), $groupacos),
-                    'directok' => in_array($aco->getId(), $directacos)
+                    'directok' => in_array($aco->getId(), $directacos),
+                    'id' => $aco->getId()
                 );
             }
 
             $this->view->table = $array;
             $this->view->groups = $groups;
-
+            $this->view->user = $user;
         }
     }
 

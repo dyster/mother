@@ -52,6 +52,7 @@
             <td><?php echo $row['action']; ?></td>
             <td><span class="glyphicon glyphicon-<?php echo $row['groupok'] ? 'ok':'remove'; ?>" style="color: <?php echo $row['groupok'] ? 'green':'red'; ?>;"></span></td>
             <td><span class="glyphicon glyphicon-<?php echo $row['directok'] ? 'ok':'remove'; ?>" style="color: <?php echo $row['directok'] ? 'green':'red'; ?>"></span></td>
+            <td><?php echo $this->tag->linkTo(array("users/flip/".$user->getId()."/".$row['id'], 'Flip')); ?></td>
         </tr>
         <?php } ?>
     </table>

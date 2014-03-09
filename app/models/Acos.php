@@ -105,6 +105,12 @@ class Acos extends \Phalcon\Mvc\Model
     {
         return $this->hide;
     }
+
+    public function getName()
+    {
+        return \Phalcon\Text::camelize($this->controller) . "::" . \Phalcon\Text::camelize($this->action);
+    }
+
     public function initialize()
     {
         $this->hasMany("id", "GroupsAcos", "aco_id", NULL);
