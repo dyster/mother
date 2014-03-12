@@ -1,5 +1,7 @@
 <?php
 
+
+
 class Vehicles extends \Phalcon\Mvc\Model
 {
 
@@ -8,31 +10,31 @@ class Vehicles extends \Phalcon\Mvc\Model
      * @var integer
      */
     protected $id;
-
+     
     /**
      *
      * @var string
      */
     protected $name;
-
+     
     /**
      *
      * @var integer
      */
     protected $vehicletype_id;
-
+     
     /**
      *
      * @var string
      */
     protected $created;
-
+     
     /**
      *
      * @var string
      */
     protected $touch;
-
+     
     /**
      *
      * @var integer
@@ -42,7 +44,7 @@ class Vehicles extends \Phalcon\Mvc\Model
     /**
      * Method to set the value of field name
      *
-     * @param  string $name
+     * @param string $name
      * @return $this
      */
     public function setName($name)
@@ -55,7 +57,7 @@ class Vehicles extends \Phalcon\Mvc\Model
     /**
      * Method to set the value of field vehicletype_id
      *
-     * @param  integer $vehicletype_id
+     * @param integer $vehicletype_id
      * @return $this
      */
     public function setVehicletypeId($vehicletype_id)
@@ -68,7 +70,7 @@ class Vehicles extends \Phalcon\Mvc\Model
     /**
      * Method to set the value of field vehicleowner_id
      *
-     * @param  integer $vehicleowner_id
+     * @param integer $vehicleowner_id
      * @return $this
      */
     public function setVehicleownerId($vehicleowner_id)
@@ -149,11 +151,13 @@ class Vehicles extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->belongsTo("vehicleowner_id", "Vehicleowners", "id", NULL);
-        $this->belongsTo("vehicletype_id", "Vehicletypes", "id", NULL);
+		$this->belongsTo("vehicleowner_id", "Vehicleowners", "id", NULL);
+		$this->belongsTo("vehicletype_id", "Vehicletypes", "id", NULL);
 
         $this->skipAttributes(array('touch'));
         $this->skipAttributesOnUpdate(array('created'));
+
+
     }
 
 }

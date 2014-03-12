@@ -96,7 +96,39 @@ class Users extends \Phalcon\Mvc\Model
             "Groups",
             "id"
         );
+        $this->hasManyToMany(
+            "id",
+            "UsersVehicleowners",
+            "user_id", "vehicleowner_id",
+            "Vehicleowners",
+            "id"
+        );
+        $this->hasManyToMany(
+            "id",
+            "UsersVehicletypes",
+            "user_id", "vehicletype_id",
+            "Vehicletypes",
+            "id"
+        );
 
+    }
+
+    public static function getAllowedVehicles($userid)
+    {
+        $user = self::findFirst($userid);
+        $ownerids = array();
+        $owners = $user->Vehicleowners;
+        foreach($owners as $owner)
+            $ownerids[] = $owner->getId();
+
+        $typeids = array();
+        $types = $user->Vehicletypes;
+        foreach($types as $type)
+            $typeids[] = $type->getId();
+
+
+
+        return Vehicles::find('vehicleowner_id IN ('.join(',', $ownerids).') AND vehicletype_id IN ('.join(',',$typeids).')');
     }
 
     /**

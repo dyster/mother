@@ -10,30 +10,97 @@ class UsersVehicleowners extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
-    public $id;
+    protected $id;
      
     /**
      *
      * @var integer
      */
-    public $user_id;
+    protected $user_id;
      
     /**
      *
      * @var integer
      */
-    public $vehicleowner_id;
+    protected $vehicleowner_id;
      
     /**
-     * Independent Column Mapping.
+     * Method to set the value of field id
+     *
+     * @param integer $id
+     * @return $this
      */
-    public function columnMap()
+    public function setId($id)
     {
-        return array(
-            'id' => 'id', 
-            'user_id' => 'user_id', 
-            'vehicleowner_id' => 'vehicleowner_id'
-        );
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field user_id
+     *
+     * @param integer $user_id
+     * @return $this
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field vehicleowner_id
+     *
+     * @param integer $vehicleowner_id
+     * @return $this
+     */
+    public function setVehicleownerId($vehicleowner_id)
+    {
+        $this->vehicleowner_id = $vehicleowner_id;
+
+        return $this;
+    }
+
+    /**
+     * Returns the value of field id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Returns the value of field user_id
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Returns the value of field vehicleowner_id
+     *
+     * @return integer
+     */
+    public function getVehicleownerId()
+    {
+        return $this->vehicleowner_id;
+    }
+
+    /**
+     * Initialize method for model.
+     */
+    public function initialize()
+    {
+		$this->belongsTo("vehicleowner_id", "Vehicleowners", "id", NULL);
+		$this->belongsTo("user_id", "Users", "id", NULL);
+
     }
 
 }
