@@ -18,8 +18,6 @@ class Security extends Plugin
      */
     public function beforeDispatch(Event $event, Dispatcher $dispatcher)
     {
-
-
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
         $pretty = \Phalcon\Text::camelize($controller) . "::" . \Phalcon\Text::camelize($action);
@@ -33,25 +31,25 @@ class Security extends Plugin
 
         }
         $wantedID = $wantedaco->getId();
-        $pass = false;
 
         $user = Users::findFirst();
-        foreach($user->Acos as $aco) {
-            if($aco->getId() == $wantedID) {
+
+        $aco = $user->getAcos(array("[Acos].[id] = $wantedID"));
+
+        if(count($aco)) {
+            $this->flash->success("Access Granted");
+            return;
+        }
+
+        foreach($user->Groups as $group) {
+
+            $gaco = $group->getAcos(array("[Acos].[id] = $wantedID"));
+
+            if(count($gaco)) {
                 $this->flash->success("Access Granted");
                 return;
             }
-        }
 
-        $groups = $user->Groups;
-
-        foreach($groups as $group) {
-            foreach($group->Acos as $aco) {
-                if($aco->getId() == $wantedID) {
-                    $this->flash->success("Access Granted");
-                    return;
-                }
-            }
         }
 
         $this->flash->error("Access Denied for $pretty");
